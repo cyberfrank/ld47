@@ -1,20 +1,13 @@
-flux = require "flux"
-local t = 0
+flux = require "lib/flux"
+lume = require "lib/lume"
+lovebpm = require "lib/lovebpm"
+t = 0
 
 function love.load()
-   print("DONE!")
-end
-
-function love.filedropped(file)
-	file:open("r")
-	local data = file:read()
-	print("Content of " .. file:getFilename() .. ' is')
-	print(data)
-	print("End of file")
+    
 end
 
 function love.keypressed(key) 
-
 end
 
 function love.update(dt)
@@ -23,4 +16,7 @@ function love.update(dt)
 end
 
 function love.draw() 
+
+    -- show fps
+    love.graphics.print(love.timer.getFPS() .. " fps", 5, 5)
 end
