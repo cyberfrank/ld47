@@ -53,13 +53,16 @@ function press_dot(x, y)
             lume.push(saved_paths, path)
         end
         path = {}
+        notes[2]:play()
         clicked_dot = nil
         return
     end
     
     if best_index ~= nil then
+        notes[1]:play()
         clicked_dot = dots[best_index]
     end
+
 end
 
 function update_dots()

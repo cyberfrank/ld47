@@ -6,6 +6,12 @@ require 'dialogue'
 
 t = 0
 
+-- record video/gif
+-- more images!
+-- game description
+-- host on cyberfrank.net
+-- blog post
+
 player = {
     x = 0,
     y = 0,
@@ -56,6 +62,11 @@ switch = {
     love.graphics.newImage('res/switch.png'),
 }
 
+notes = {
+    love.audio.newSource('res/note1.wav', 'static'),
+    love.audio.newSource('res/note2.wav', 'static'),
+} 
+
 bg = love.graphics.newImage('res/bg.jpg')
 bg_night = love.graphics.newImage('res/night.png')
 boat = love.graphics.newImage('res/boat.png')
@@ -101,18 +112,21 @@ function love.load()
         gain = 0.5,
         decaytime = 5,
     })
-
     click = love.audio.newSource('res/click.wav', 'static')
-    waves = love.audio.newSource('res/waves.wav', 'stream')
+    waves = love.audio.newSource('res/waves.ogg', 'stream')
     click:setVolume(0.2)
     click:setEffect('world_reverb')
     waves:setVolume(0.0)
     waves:setEffect('world_reverb')
+    lume.count(notes, function(note) 
+        note:setEffect('world_reverb')
+        note:setVolume(0.6)
+    end)
     waves:setLooping(true)
     waves:play()
 
     music = lovebpm.newTrack()
-        :load('res/track.wav')
+        :load('res/track.ogg')
         :setBPM(70)
         :setPitch(1)
         :setLooping(true)
@@ -120,6 +134,7 @@ function love.load()
         :setVolume(1.0)
         :on('beat', function(n) 
             if player.star_mode then return end
+            if player.no_move_hack and n < 4 then return end
 
             if n % 4 == 0 then
                 if not step_dialogue() then
@@ -216,7 +231,7 @@ function love.update(dt)
     local beat, subbeat = music:getBeat(4)
     player.row_frame = math.floor(lume.pingpong(subbeat * 2) * 4 + 1)
     music:setVolume(1.0 - player.star_mode_t)
-    waves:setVolume(player.star_mode_t * 0.5)
+    waves:setVolume(player.star_mode_t)
 
     update_dots()
 
@@ -262,7 +277,7 @@ function draw_whiteworld()
 
     love.graphics.draw(man_anim[lume.clamp(player.man_frame, 1, 3)], w/2, h/2, rot, 1, 1, 10, 150)
     love.graphics.draw(boat, w/2, h/2, rot, 1, 1, 125, 115)   
-    love.graphics.draw(row_anim[lume.round(lume.smooth(player.row_frame, 5, player.star_mode_t * 8))], w/2, h/2, rot, 1, 1, 200, 117)
+    love.graphics.draw(row_anim[lume.round(lume.smooth(player.row_frame, 5, player.star_mode_t * 8))], w/2, h/2, rot, 1, 1, 135, 115)
 end
 
 function draw_jungle_background()
@@ -359,6 +374,4 @@ function love.draw()
     love.graphics.draw(switch[1], w/2, h - 150, 0, 1, 1, 63, 0)
     love.graphics.draw(switch[2], w/2 - 33 + player.switch_mode * 32, h - 122, 0, 1, 1, 21, 0)
     love.graphics.setShader()
-
-    love.graphics.print(love.timer.getFPS(), 5, 10)
 end

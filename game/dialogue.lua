@@ -13,7 +13,7 @@ texts = {
     "In my day, we didn't have those fancy starfinders at all.",
     "Really? How did you do it then?",
     "We just had to guess where the stars had fallen!",
-    "It must've been hard to find them without being able to see the real world.",
+    "That must have been difficult.",
     "It sure was.",
     "How do I use it now again?",
     "Right mouse button.",
@@ -51,8 +51,8 @@ end
 
 function draw_dialogue()
     love.graphics.setColor(0, 0, 0, dialogue.a_t)
-    love.graphics.printf(texts[dialogue.a_text] or '', w/2 - 280, h/2 - 140, 200, 'right')
+    love.graphics.printf(texts[dialogue.a_text] or '', w/2 - 275, h/2 - 140, 200, 'right')
     love.graphics.setColor(0, 0, 0, dialogue.b_t)
-    love.graphics.printf(texts[dialogue.b_text] or '', w/2 + 70, h/2 - 180, 200, 'left')
+    love.graphics.printf(texts[dialogue.b_text] or '', w/2 + 80, h/2 - 170, 200, 'left')
     love.graphics.setColor(1, 1, 1)
 end
