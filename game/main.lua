@@ -6,12 +6,6 @@ require 'dialogue'
 
 t = 0
 
--- record video/gif
--- more images!
--- game description
--- host on cyberfrank.net
--- blog post
-
 player = {
     x = 0,
     y = 0,
